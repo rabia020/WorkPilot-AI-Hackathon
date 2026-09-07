@@ -985,13 +985,13 @@ Planned enhancements include:
 ![Approval](assets/plan_day.png)
 3. RAG / Document Q&A
 ![Approval](assets/Rag.png) 
-5. Human Approval Interface
-![Approval](assets/event_approval.png) 
-6. Calendar Automation
+4. Human Approval Interface
+![Approval](assets/Event_Approval.png) 
+5. Calendar Automation
 ![Approval](assets/event_creation.png)
-7. Task Management
+6. Task Management
 ![Approval](assets/Tasks.png) 
-8. Notes Management
+7. Notes Management
 ![Approval](assets/Notes.png) 
 
 
