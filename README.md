@@ -972,13 +972,7 @@ Planned enhancements include:
 
 # 🎥 Demo
 
-Add your hackathon demo video here:
-
-```text
-[Watch WorkPilot AI Demo](YOUR-DEMO-LINK)
-```
-
----
+👉 [**Watch WorkPilot AI Demo**](https://drive.google.com/file/d/1t4UnU3jqGWjHcP4VX6cAhy4iIjFtZq7c/view?usp=sharing)
 
 # 🖼️ Screenshots
 
@@ -987,16 +981,19 @@ Add your hackathon demo video here:
 1. WorkPilot Dashboard
 ![Approval](assets/welcome.png)
 ![Approval](assets/manager_panel.png) 
-
 2. Daily Planning
 ![Approval](assets/plan_day.png)
 3. RAG / Document Q&A
 ![Approval](assets/Rag.png) 
 5. Human Approval Interface
 ![Approval](assets/event_approval.png) 
-6. Task Management
-7. Calendar / Email Automation
+6. Calendar Automation
 ![Approval](assets/event_creation.png)
+7. Task Management
+![Approval](assets/Tasks.png) 
+8. Notes Management
+![Approval](assets/Notes.png) 
+
 
 ---
 
