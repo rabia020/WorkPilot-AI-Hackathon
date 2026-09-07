@@ -1,0 +1,198 @@
+"""
+tools/event_time_resolver.py
+=============================
+Fixes the calendar time-mismatch bug: previously, calendar_agent_node
+extracted free-text date/duration ("today, 1pm" / "2:30pm"), and that
+free text was flattened into an English sentence and handed to n8n's
+own AI agent, which had to *independently re-parse* it and compute
+start/end times itself. Two separate LLM guesses, no shared ground
+truth — that's why "1pm to 2:30pm" became "2:30pm to 5pm".
+
+This module resolves the same free text into exact ISO 8601
+timestamps in Python, deterministically, before anything is sent to
+n8n. n8n's agent then just has to copy two ISO strings into the tool
+call instead of doing date math from scratch.
+
+Usage (from tools/n8n_client.py's create_calendar_event):
+
+    from tools.event_time_resolver import resolve_event_datetimes
+
+    start_iso, end_iso = resolve_event_datetimes(date, duration)
+"""
+
+import os
+import re
+from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
+
+from dateutil import parser as dateutil_parser
+
+
+# ==========================================================
+# CONFIG
+# ==========================================================
+
+# Matches the n8n workflow's own Timezone setting (see workflow
+# settings screenshot — currently "Asia/Karachi"). Override via env
+# var so this isn't hardcoded to one deployment.
+DEFAULT_TZ_NAME = os.getenv("APP_TIMEZONE", "Asia/Karachi")
+
+DAY_MAP = {
+    "monday": 0,
+    "tuesday": 1,
+    "wednesday": 2,
+    "thursday": 3,
+    "friday": 4,
+    "saturday": 5,
+    "sunday": 6,
+}
+
+# Matches things like "1pm", "1:00pm", "13:00", "2:30 PM"
+_CLOCK_TIME_RE = re.compile(
+    r'\b(\d{1,2}(:\d{2})?\s*(am|pm|AM|PM)?)\b'
+)
+
+# Matches "1 hour", "30 minutes", "1.5 hrs", etc.
+_DURATION_RE = re.compile(
+    r'(\d+(\.\d+)?)\s*(hour|hr|minute|min)', re.IGNORECASE
+)
+
+
+# ==========================================================
+# DATE RESOLUTION
+# ==========================================================
+
+def _resolve_relative_date(text: str, tz: ZoneInfo):
+    """
+    Resolve 'today' / 'tomorrow' / 'yesterday' / a weekday name in
+    free text to an actual date. Defaults to today if nothing
+    matches, since that's the most common case ("create an event
+    for 3pm" with no date mentioned at all).
+    """
+
+    text_l = (text or "").lower()
+    now = datetime.now(tz)
+
+    if "tomorrow" in text_l:
+        return (now + timedelta(days=1)).date()
+
+    if "yesterday" in text_l:
+        return (now - timedelta(days=1)).date()
+
+    for name, idx in DAY_MAP.items():
+
+        if name in text_l:
+
+            days_ahead = idx - now.weekday()
+
+            # "friday" mentioned on a friday should mean today,
+            # not next friday
+            if days_ahead < 0:
+                days_ahead += 7
+
+            return (now + timedelta(days=days_ahead)).date()
+
+    return now.date()
+
+
+def _extract_clock_time(text: str):
+    """
+    Pull the first clock-time-looking token out of free text and
+    parse it into a time object. Returns None if nothing looks like
+    a time (important — we don't want to accidentally parse a bare
+    day number like '21' out of 'today, the 21st' as '21:00').
+    """
+
+    if not text:
+        return None
+
+    match = _CLOCK_TIME_RE.search(text)
+
+    if not match:
+        return None
+
+    token = match.group(1).strip()
+
+    # Require either a colon or an am/pm marker so we don't misfire
+    # on stray digits with no time context.
+    if ":" not in token and not re.search(r'(am|pm)', token, re.IGNORECASE):
+        return None
+
+    try:
+        return dateutil_parser.parse(token).time()
+    except (ValueError, OverflowError):
+        return None
+
+
+# ==========================================================
+# MAIN ENTRY POINT
+# ==========================================================
+
+def resolve_event_datetimes(
+    date_field: str,
+    duration_field: str,
+    tz_name: str = DEFAULT_TZ_NAME,
+):
+    """
+    Turn calendar_agent_node's free-text `date` and `duration` fields
+    into unambiguous ISO 8601 start/end timestamps.
+
+    date_field:     e.g. "today, 1pm", "friday", "tomorrow at 10am"
+    duration_field: e.g. "2:30pm" (explicit end time),
+                     "1 hour" (duration), "" (nothing specified)
+
+    Returns (start_iso, end_iso) as strings like
+    "2026-08-21T13:00:00+05:00".
+    """
+
+    tz = ZoneInfo(tz_name)
+    now = datetime.now(tz)
+
+    event_date = _resolve_relative_date(date_field, tz)
+    start_time = _extract_clock_time(date_field) or now.time()
+
+    start_dt = datetime.combine(event_date, start_time, tzinfo=tz)
+
+    end_dt = None
+
+    if duration_field:
+
+        dur_text = duration_field.lower().strip()
+        dur_match = _DURATION_RE.search(dur_text)
+
+        if dur_match:
+
+            # "for 1 hour" / "for 30 minutes" → treat as a duration
+            # relative to the start time
+            amount = float(dur_match.group(1))
+            unit = dur_match.group(3).lower()
+
+            delta = (
+                timedelta(hours=amount)
+                if unit.startswith("h")
+                else timedelta(minutes=amount)
+            )
+
+            end_dt = start_dt + delta
+
+        else:
+
+            # otherwise treat it as an explicit end clock time,
+            # e.g. "2:30pm", "until 6pm"
+            end_time = _extract_clock_time(dur_text)
+
+            if end_time:
+
+                end_dt = datetime.combine(event_date, end_time, tzinfo=tz)
+
+                # end time earlier than start on the same date
+                # almost always means it crosses midnight
+                if end_dt <= start_dt:
+                    end_dt += timedelta(days=1)
+
+    if end_dt is None:
+        # nothing usable extracted — default to a 1-hour event
+        # rather than sending an ambiguous/empty end time downstream
+        end_dt = start_dt + timedelta(hours=1)
+
+    return start_dt.isoformat(), end_dt.isoformat()
