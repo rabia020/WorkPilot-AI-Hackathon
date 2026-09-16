@@ -5,6 +5,7 @@ Role-based workspace: Manager / Employee
 import streamlit as st
 from auth import login
 from icons import ICON_ROBOT
+from config import DEMO_MODE
 
 @st.cache_resource
 def warm_up_rag_dependencies():
@@ -380,8 +381,16 @@ def login_page():
                     st.session_state.user = user
                     st.session_state.page = "dashboard"
                     st.session_state.main_view = "home"
-                    st.rerun()
 
+                    # Seed sample Tasks and Notes for demo deployment
+                    if DEMO_MODE:
+                        try:
+                            import work_manager
+                            work_manager.seed_demo_data(user["username"])
+                        except Exception as e:
+                            print(f"Demo data seeding failed: {e}")
+
+                    st.rerun()
         st.markdown(
             '<p style="text-align:center;font-size:12px;color:#94a3b8;margin-top:24px">'
             'Powered by WorkPilot AI \u2014 your autonomous work assistant.</p>',

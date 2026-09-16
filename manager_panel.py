@@ -3,6 +3,7 @@ import pandas as pd
 import streamlit as st
 
 from rag.ingest import ingest_pdf
+from config import DEMO_MODE
 
 from auth import (
     create_user,
@@ -189,7 +190,7 @@ def show_manager_panel():
 
                         st.rerun()
 
-    # =====================================================
+        # =====================================================
     # TAB 3 - DOCUMENT UPLOAD
     # =====================================================
 
@@ -198,16 +199,14 @@ def show_manager_panel():
         st.subheader("📂 Upload Company Documents")
 
         st.write(
-            "Managers can upload company documents to the AI Knowledge Base."
+            "Managers can upload company PDF documents "
+            "to the AI Knowledge Base."
         )
 
         uploaded_file = st.file_uploader(
-            "Choose File",
-            type=[
-                "pdf",
-                "docx",
-                "txt"
-            ]
+            "Choose a PDF document",
+            type=["pdf"],
+            help="Upload a PDF containing company or knowledge-base information."
         )
 
         if uploaded_file is not None:
@@ -218,40 +217,68 @@ def show_manager_panel():
             )
 
             with open(save_path, "wb") as f:
-
                 f.write(uploaded_file.getbuffer())
 
             st.success(
-                f"{uploaded_file.name} saved successfully."
+                f"{uploaded_file.name} uploaded successfully."
             )
 
-            if st.button("Add to Knowledge Base"):
+            if st.button(
+                "Add to Knowledge Base",
+                type="primary"
+            ):
 
                 try:
 
                     with st.spinner(
-                        "Indexing document into ChromaDB..."
+                        "Processing document and creating embeddings..."
                     ):
 
-                        # -----------------------------
-                        # Direct Python RAG Ingestion
-                        # -----------------------------
-                        ingest_pdf(save_path)
+                        result = ingest_pdf(save_path)
 
-                    st.success(
-                        "Document successfully indexed into ChromaDB."
-                    )
+                    if result.get("success"):
+
+                        st.success(
+                            result.get(
+                                "message",
+                                "Document successfully added to the Knowledge Base."
+                            )
+                        )
+
+                        if DEMO_MODE:
+                            st.info(
+                                "Demo mode: the document is stored in "
+                                "this session and is available for RAG queries."
+                            )
+                        else:
+                            st.info(
+                                "Document indexed in ChromaDB and is now "
+                                "available to the AI Assistant."
+                            )
+
+                    else:
+
+                        st.error(
+                            result.get(
+                                "message",
+                                "Document processing failed."
+                            )
+                        )
 
                 except Exception as e:
 
                     st.error(
-                        f"Indexing Failed: {str(e)}"
+                        f"Document processing failed: {str(e)}"
                     )
 
         st.info(
             """
 Only Managers can upload company documents.
 
-Uploaded documents are indexed into ChromaDB and become searchable by all employees through the AI Assistant.
+In demo mode, uploaded PDFs are processed into text chunks
+and embeddings and stored in the current Streamlit session.
+
+The AI Assistant can then retrieve relevant information
+from the uploaded document.
 """
         )

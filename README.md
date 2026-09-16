@@ -1,85 +1,75 @@
 # 🚀 WorkPilot AI
 
-> **An AI employee that understands your work, plans your day, and executes tasks for you.**
+> **An AI work assistant that understands your work, plans your day, and helps you get things done.**
 
-WorkPilot AI is an **autonomous AI work-management platform** that combines personal work context, enterprise knowledge, intelligent planning, workplace automation, persistent memory, and human-in-the-loop approval.
+**WorkPilot AI** is an agentic AI work-management platform that combines **multi-agent orchestration, RAG, task management, work context, planning, memory, and human-in-the-loop workflows** into a single workspace.
 
-Unlike a traditional chatbot that only answers questions, WorkPilot is designed to **understand work, plan actions, safely execute tasks, and verify the results**.
-
----
-
-## 🏆 Hackathon Project
-
-WorkPilot AI demonstrates how **Agentic AI** can be applied to real-world workplace productivity.
-
-The system combines:
-
-* 🤖 Multi-Agent AI
-* 🧠 Persistent Memory
-* 📚 Retrieval-Augmented Generation (RAG)
-* 📧 Email Automation
-* 📅 Calendar Management
-* 💬 Slack Integration
-* 🎫 Jira Integration
-* ✅ Task Management
-* 📝 Notes
-* 🔐 Role-Aware Knowledge Access
-* 🧑‍⚖️ Human-in-the-Loop Approval
-* ⚡ n8n Workflow Automation
-* 🔎 Execution Verification
+This repository contains the **Streamlit Demo version** of WorkPilot AI, designed to demonstrate the core product experience without requiring users to deploy the full backend infrastructure.
 
 ---
 
-# 💡 The Problem
+## 🌐 Live Demo
 
-Modern professionals work across multiple tools every day:
+**Try WorkPilot AI:**
 
+👉 **[Open the Streamlit Demo](YOUR_STREAMLIT_APP_URL)**
+
+> Replace `YOUR_STREAMLIT_APP_URL` with your actual Streamlit Community Cloud URL after deployment.
+
+### 🎥 Demo Video
+
+👉 **[Watch the WorkPilot AI Demo](https://drive.google.com/file/d/1t4UnU3jqGWjHcP4VX6cAhy4iIjFtZq7c/view?usp=sharing)**
+
+---
+
+# 💡 What is WorkPilot AI?
+
+Modern professionals manage work across multiple systems:
+
+* Tasks
+* Notes
 * Email
 * Calendar
 * Slack
 * Jira
 * Company documents
-* Task lists
-* Notes
+* Meetings
+* Research
 
-Traditional productivity tools require users to manually switch between these systems.
+Switching between these systems creates unnecessary context switching.
 
-Generic AI assistants can answer questions, but they often lack:
+Traditional productivity applications organize information, while generic AI chatbots primarily answer questions.
 
-* Awareness of the user's current work
-* Access to organizational knowledge
-* Persistent memory
-* Multi-step planning
-* Real workplace integrations
-* Controlled action execution
-* Verification of completed actions
-
-This creates a gap between **AI that can talk** and **AI that can actually help get work done**.
-
----
-
-# 💎 Our Solution
-
-WorkPilot AI acts as an **AI work employee** that connects knowledge, planning, memory, and workplace automation into one system.
+**WorkPilot AI is designed to connect these capabilities.**
 
 Instead of:
 
 ```text
-User → Ask Question → AI → Answer
+User
+  ↓
+Ask Question
+  ↓
+AI
+  ↓
+Answer
 ```
 
-WorkPilot follows:
+WorkPilot follows an agentic workflow:
 
 ```text
 User Request
      ↓
-Understand
+Understand Intent
+     ↓
+Load Work Context
      ↓
 Plan
      ↓
 Select Specialist
      ↓
-Review / Approve
+Generate Result / Action
+     ↓
+Human Review
      ↓
 Execute
      ↓
@@ -88,89 +78,68 @@ Verify
 Remember
 ```
 
-This transforms the AI from a simple conversational interface into a **context-aware agentic work-management system**.
+The goal is to move from **AI that only answers** toward **AI that can understand, plan, and assist with work**.
 
 ---
 
-# ✨ Key Features
+# ✨ Demo Features
 
-## 🤖 Autonomous Work Management
+The public Streamlit demo focuses on the core WorkPilot experience.
 
-Users can interact with WorkPilot using natural language.
+## 🤖 AI Work Assistant
 
-Examples:
+Interact with WorkPilot using natural language.
 
-> "Plan my day based on my pending tasks."
+Example requests:
 
-> "Find the company's leave policy."
+```text
+Plan my workday.
 
-> "Draft an email to the team."
+What should I focus on today?
 
-> "Schedule a meeting for tomorrow."
+Show me my pending tasks.
 
-> "Send this update to Slack."
+Find information about the company policy.
 
-> "Show me my recent emails."
+Summarize my work context.
 
-The system determines what type of request it is and routes it to the appropriate AI capability.
+Help me organize today's priorities.
+```
 
----
-
-## 🧠 Work-Aware AI
-
-WorkPilot maintains awareness of the user's work context.
-
-The AI can use information such as:
-
-* Tasks
-* Notes
-* Calendar information
-* Conversation history
-* Recent work activity
-* Enterprise documents
-
-This enables more personalized and context-aware responses.
-
-Instead of asking:
-
-> "What tasks do I have?"
-
-the user can ask:
-
-> "What should I focus on today?"
-
-and WorkPilot can reason over the available work context.
+The assistant interprets the request and uses the appropriate WorkPilot capability.
 
 ---
 
-# 📋 Task Management
+## 📋 Task Management
 
-WorkPilot provides task management capabilities for organizing daily work.
+WorkPilot provides an integrated task workspace.
 
 Users can:
 
 * Create tasks
 * View tasks
-* Update task status
+* Track task status
 * Set priorities
-* Track deadlines
+* Manage deadlines
 * Review pending work
+* Organize daily responsibilities
 
-The AI can also use task information when generating daily plans.
+Tasks can also become part of the AI's work context.
 
-### Example
+Example:
 
 ```text
 User:
-"Plan my day."
+Plan my day.
 
         ↓
 
 WorkPilot reviews:
+
 • Pending tasks
 • Priorities
 • Deadlines
-• Calendar
+• Work context
 
         ↓
 
@@ -179,159 +148,101 @@ AI-generated daily plan
 
 ---
 
-# 📝 Notes
+## 📝 Notes
 
-Users can create and manage work notes through the WorkPilot workspace.
+WorkPilot includes a workspace for creating and managing notes.
 
-Notes can also become part of the user's work context, allowing the AI to provide more relevant assistance.
+Notes can become part of the user's work context, allowing the AI to provide more relevant assistance.
+
+Example:
+
+```text
+Meeting with the engineering team
+- API integration pending
+- Review deployment issue
+- Follow up with backend team
+```
 
 ---
 
-# 📅 Calendar Management
+## 📅 Daily Planning
 
-WorkPilot integrates calendar operations into the AI workflow.
+WorkPilot can generate a structured daily plan based on available work information.
 
-Capabilities include:
+The planner can consider:
 
-* Reading calendar information
-* Understanding scheduled events
-* Preparing calendar actions
-* Creating calendar events
-* Using calendar context for daily planning
+* Pending tasks
+* Priorities
+* Deadlines
+* Existing work context
 
 Example:
 
 ```text
 User:
-"Schedule a team meeting tomorrow at 3 PM."
+Plan my workday.
 
-        ↓
-AI prepares the event
-        ↓
-Human approval
-        ↓
-Calendar execution
-        ↓
-Execution verification
+WorkPilot:
+
+1. Complete high-priority deployment task
+2. Review pending engineering issue
+3. Follow up on outstanding task
+4. Complete lower-priority documentation
 ```
 
 ---
 
-# 📧 Email Automation
+# 📚 Enterprise Knowledge — RAG
 
-WorkPilot can assist with workplace email workflows.
-
-Capabilities include:
-
-* Reading recent emails
-* Drafting emails
-* Sending emails
-* Preparing broadcast emails
-* Sending replies
-* Analyzing complaint-related emails
-
-Example:
-
-```text
-User
- ↓
-"Send an email to the team about tomorrow's meeting."
- ↓
-Email Agent
- ↓
-Generate proposed email
- ↓
-Human Approval
- ↓
-Send
- ↓
-Verify
-```
-
----
-
-# 💬 Slack Integration
-
-WorkPilot can interact with Slack-based workplace workflows.
-
-Capabilities include:
-
-* Preparing Slack messages
-* Sending notifications
-* Sending workplace updates
-* Sending complaint notifications
-
-This allows WorkPilot to move from generating information to performing controlled workplace communication.
-
----
-
-# 🎫 Jira Integration
-
-WorkPilot can interact with Jira workflows.
-
-Capabilities include:
-
-* Retrieving Jira issues
-* Preparing Jira updates
-* Supporting Jira issue creation/update workflows
-
-Jira-related operations are incorporated into the agentic workflow rather than allowing uncontrolled external execution.
-
----
-
-# 📚 Enterprise Knowledge with RAG
-
-WorkPilot includes a **Retrieval-Augmented Generation (RAG)** system for answering questions from company documents.
+WorkPilot includes a **Retrieval-Augmented Generation (RAG)** pipeline for answering questions from organizational documents.
 
 ### RAG Pipeline
 
 ```text
-Company Documents
-       ↓
+Documents
+    ↓
 Document Processing
-       ↓
+    ↓
 Text Chunking
-       ↓
+    ↓
 Embeddings
-       ↓
+    ↓
 ChromaDB
-       ↓
+    ↓
 Semantic Retrieval
-       ↓
+    ↓
 Relevant Context
-       ↓
+    ↓
 LLM
-       ↓
+    ↓
 Grounded Answer
 ```
+
+Users can ask questions such as:
+
+```text
+What is the company's leave policy?
+
+What does the employee handbook say about remote work?
+
+Summarize the HR guidelines.
+```
+
+The system retrieves relevant document context before generating an answer.
 
 ### Technologies
 
 * ChromaDB
 * Sentence Transformers
-* `BAAI/bge-small-en-v1.5`
-* Mistral
+* BGE embeddings
 * LangChain
-
-Users can ask:
-
-```text
-"What is the company's leave policy?"
-
-"Summarize the HR guidelines."
-
-"What does the employee handbook say about remote work?"
-```
-
-The system retrieves relevant organizational information before generating the response.
+* Mistral / LLM-based generation
 
 ---
 
 # 🔐 Role-Aware Knowledge Access
 
-Enterprise information can be accessed according to user roles and permissions.
-
-This allows WorkPilot to support different levels of access to organizational knowledge.
+The full WorkPilot architecture supports role-aware enterprise knowledge retrieval.
 
 For example:
 
@@ -349,129 +260,55 @@ Employee
    └── Employee Resources
 ```
 
-This makes the RAG system more suitable for enterprise environments where information access needs to be controlled.
+This allows retrieved knowledge to be filtered according to the user's role and permissions.
 
 ---
 
-# 🧩 Multi-Agent Architecture
+# 🧩 Agentic AI Architecture
 
-WorkPilot uses a **Supervisor–Planner–Worker architecture** built with LangGraph.
+WorkPilot uses a **Supervisor–Planner–Worker architecture**.
 
-Instead of relying on a single AI agent for everything, WorkPilot routes requests to specialized agents.
+Instead of using a single agent for every task, requests can be routed to specialized capabilities.
 
-### Main Components
+### Core Components
 
-* **Supervisor Agent** — understands intent and routes requests
-* **Planner Agent** — determines the required workflow
-* **RAG Agent** — retrieves enterprise knowledge
-* **Email Agent** — handles email workflows
-* **Calendar Agent** — handles calendar operations
-* **Slack Agent** — handles Slack communication
-* **Jira Agent** — handles Jira workflows
-* **Research Agent** — handles research-oriented requests
-* **Memory Layer** — stores persistent context
-* **Responder** — generates the final user response
+| Component     | Responsibility                         |
+| ------------- | -------------------------------------- |
+| Supervisor    | Understands intent and routes requests |
+| Planner       | Determines the required workflow       |
+| RAG Agent     | Retrieves enterprise knowledge         |
+| Daily Planner | Generates work plans                   |
+| Work Manager  | Handles tasks and work context         |
+| Responder     | Produces the final response            |
+| Memory Layer  | Maintains persistent/contextual state  |
+
+The architecture is designed to make the system easier to extend with additional agents and tools.
 
 ---
 
 # 🏗️ System Architecture
 
-```text
-                         ┌──────────────┐
-                         │     User     │
-                         └──────┬───────┘
-                                │
-                                ▼
-                       ┌─────────────────┐
-                       │   Streamlit UI  │
-                       └────────┬────────┘
-                                │
-                                ▼
-                       ┌─────────────────┐
-                       │    FastAPI      │
-                       └────────┬────────┘
-                                │
-                                ▼
-                       ┌─────────────────┐
-                       │    Supervisor   │
-                       └────────┬────────┘
-                                │
-                                ▼
-                         ┌─────────────┐
-                         │   Planner   │
-                         └──────┬──────┘
-                                │
-          ┌─────────────────────┼─────────────────────┐
-          │          │          │          │          │
-          ▼          ▼          ▼          ▼          ▼
-        RAG       Email      Calendar    Slack      Jira
-       Agent      Agent       Agent      Agent      Agent
-          │          │          │          │          │
-          └──────────┴──────────┼──────────┴──────────┘
-                                │
-                                ▼
-                       ┌─────────────────┐
-                       │ Human Approval  │
-                       └────────┬────────┘
-                                │
-                                ▼
-                       ┌─────────────────┐
-                       │  n8n Workflows  │
-                       └────────┬────────┘
-                                │
-                    ┌───────────┼───────────┐
-                    ▼           ▼           ▼
-                  Gmail      Calendar     Slack/Jira
-                                │
-                                ▼
-                       Execution Results
-                                │
-                                ▼
-                       ┌─────────────────┐
-                       │ Persistent      │
-                       │ Memory          │
-                       └─────────────────┘
-```
+### Streamlit Demo
+
+![Streamlit Demo Architecture](assets/workpilot_demo_architecture.svg)
 
 ---
 
-# 🔄 Agentic Workflow
+# 🏢 Full WorkPilot Architecture
 
-A typical action request follows:
+The original WorkPilot architecture can also connect the AI layer with external workplace systems.
 
-```text
-1. User Request
-       ↓
-2. Load Memory
-       ↓
-3. Supervisor Classification
-       ↓
-4. Planning
-       ↓
-5. Specialist Agent
-       ↓
-6. Human Review
-       ↓
-7. Tool Execution
-       ↓
-8. Execution Verification
-       ↓
-9. Save Results
-       ↓
-10. Final Response
-```
-
-Read-only requests can bypass human approval when no external side effect is involved.
+![Full WorkPilot Architecture](assets/workpilot_full_architecture.svg)
 
 ---
 
-# 🧑‍⚖️ Human-in-the-Loop Safety
+# 🧑‍⚖️ Human-in-the-Loop
 
-One of WorkPilot's key design principles is:
+A core design principle of WorkPilot is:
 
-> **AI should not perform consequential actions blindly.**
+> **AI-generated actions should be reviewable before consequential external execution.**
 
-For actions that can create external side effects, WorkPilot can pause for human approval.
+For actions that can create external side effects, the full architecture can pause for human approval.
 
 ```text
 AI Decision
@@ -486,47 +323,18 @@ Approve  Reject
  │        │
  ▼        ▼
 Execute   Stop
+ │
+ ▼
+Verify
 ```
 
-If an action is rejected:
-
-```text
-Action rejected — nothing was executed.
-```
-
-This provides an important safety layer for workplace automation.
+Read-only requests can be handled without an approval step when no external side effect is involved.
 
 ---
 
-# 🛡️ Safe Tool Execution
+# ⚡ Workplace Automation
 
-WorkPilot separates **information retrieval** from **external actions**.
-
-For example, a calendar request intended to retrieve information should not accidentally create or modify an event.
-
-The system therefore applies controlled processing before requests reach external automation workflows.
-
-### Design Principle
-
-```text
-Read Information
-       ↓
-Reason About Action
-       ↓
-Request Approval
-       ↓
-Execute
-```
-
-This reduces the risk of unintended tool execution.
-
----
-
-# ⚡ n8n Automation Layer
-
-WorkPilot uses **n8n** as the workflow automation and integration layer.
-
-Instead of tightly coupling every external service directly to the AI agents, WorkPilot sends structured action requests to n8n.
+The full WorkPilot architecture is designed to integrate with workplace services through **n8n workflows**.
 
 ```text
 LangGraph
@@ -538,7 +346,7 @@ Structured Action
 n8n Webhook
     │
     ▼
-n8n Workflow
+Workflow
     │
     ├── Email
     ├── Calendar
@@ -546,58 +354,52 @@ n8n Workflow
     └── Jira
 ```
 
-This architecture makes workplace integrations easier to maintain and extend.
+This keeps external integrations separated from the core agent logic.
+
+It also makes individual integrations easier to modify or replace.
 
 ---
 
-# 💾 Persistent Memory
+# 🧠 Memory Architecture
 
-WorkPilot uses multiple memory mechanisms.
+WorkPilot can use multiple types of application state.
+
+```text
+                  WorkPilot State
+                        │
+          ┌─────────────┼─────────────┐
+          ▼             ▼             ▼
+      PostgreSQL    LangGraph      ChromaDB
+      Structured    Checkpoints    Semantic
+       Memory         / State      Knowledge
+```
 
 ### PostgreSQL
 
-Used for structured application memory and persistent state.
+The full application can use PostgreSQL for structured persistent information such as:
 
-Example database:
-
-```text
-agent_memory
-```
-
-Data can include:
-
-* Memory
+* User context
 * Agent state
-* Action logs
-* Work context
+* Work information
+* Action records
 
-### LangGraph MemorySaver
+### LangGraph State
 
-Used for graph checkpoints and conversational state.
+LangGraph state/checkpointing supports agent workflow execution and conversational context.
 
 ### ChromaDB
 
-Used for semantic enterprise knowledge retrieval.
-
-### Combined Architecture
-
-```text
-                  WorkPilot Memory
-                         │
-          ┌──────────────┼──────────────┐
-          ▼              ▼              ▼
-     PostgreSQL      LangGraph      ChromaDB
-     Structured      Checkpoints    Semantic
-       Memory          / State      Knowledge
-```
+ChromaDB stores vectorized document information used for semantic retrieval.
 
 ---
 
 # 🔎 Execution Verification
 
-WorkPilot does not simply assume that an action succeeded.
+The full architecture is designed around:
 
-After execution, the system records structured results.
+> **Plan → Execute → Verify**
+
+Instead of assuming that an external action succeeded, the system can process the returned execution result.
 
 Example:
 
@@ -612,7 +414,7 @@ Details:
 Email sent successfully
 ```
 
-If execution fails:
+Or:
 
 ```text
 Action:
@@ -625,31 +427,181 @@ Details:
 Calendar service returned an error
 ```
 
-The final response is generated using the actual execution results.
-
-This creates a reliable:
-
-> **Plan → Execute → Verify**
-
-workflow.
+The final response can then reflect the actual execution result.
 
 ---
 
-# 📊 Intelligent Dashboard
+# 📊 WorkPilot Dashboard
 
-The WorkPilot dashboard provides a centralized view of the user's work.
+The dashboard acts as a centralized work command center.
 
-It can display:
+It can provide access to:
 
 * Today's tasks
 * Upcoming tasks
 * Recent notes
-* Calendar information
+* Daily planning
 * Work statistics
-* AI-generated daily planning
+* AI assistance
 * Recent activity
 
-The dashboard serves as the user's **AI-powered work command center**.
+The demo version focuses on providing this experience directly through Streamlit.
+
+---
+
+# 🔄 Example Workflows
+
+## 1. Daily Planning
+
+```text
+User
+ │
+ ▼
+"Plan my workday."
+ │
+ ▼
+Load work context
+ │
+ ▼
+Review tasks
+ │
+ ▼
+Prioritize work
+ │
+ ▼
+Generate daily plan
+```
+
+---
+
+## 2. Knowledge Question
+
+```text
+User
+ │
+ ▼
+"What is the company's leave policy?"
+ │
+ ▼
+RAG Agent
+ │
+ ▼
+Retrieve relevant documents
+ │
+ ▼
+Generate grounded response
+```
+
+---
+
+## 3. Task Management
+
+```text
+User
+ │
+ ▼
+"Create a task to review the deployment."
+ │
+ ▼
+Work Manager
+ │
+ ▼
+Create task
+ │
+ ▼
+Update work context
+```
+
+---
+
+## 4. External Action
+
+In the full architecture:
+
+```text
+User Request
+     ↓
+Understand
+     ↓
+Plan
+     ↓
+Prepare Action
+     ↓
+Human Approval
+     ↓
+Execute
+     ↓
+Verify
+     ↓
+Return Result
+```
+
+---
+
+# 🌐 Demo Mode vs Full Architecture
+
+This repository contains the **Streamlit Demo configuration**.
+
+### Demo Mode
+
+The deployed demo is designed to run without requiring the complete production infrastructure.
+
+```text
+Streamlit
+   │
+   ▼
+WorkPilot Demo Logic
+   │
+   ├── Tasks
+   ├── Notes
+   ├── Planning
+   ├── Dashboard
+   └── AI Features
+```
+
+Demo state can be maintained through Streamlit session state/local application state.
+
+### Full Architecture
+
+The complete WorkPilot architecture can additionally use:
+
+```text
+Streamlit
+    ↓
+FastAPI
+    ↓
+LangGraph
+    ↓
+PostgreSQL
+    ↓
+ChromaDB
+    ↓
+n8n
+    ↓
+Email / Calendar / Slack / Jira
+```
+
+This separation allows the public demo to remain lightweight while preserving the architecture for a more complete deployment.
+
+---
+
+# 🛠️ Technology Stack
+
+| Category            | Technology            |
+| ------------------- | --------------------- |
+| Language            | Python                |
+| Frontend            | Streamlit             |
+| Agent Framework     | LangGraph             |
+| LLM Framework       | LangChain             |
+| LLMs                | Groq / Mistral        |
+| Embeddings          | Sentence Transformers |
+| Vector Database     | ChromaDB              |
+| Backend             | FastAPI               |
+| Database            | PostgreSQL            |
+| Automation          | n8n                   |
+| Document Processing | PyPDF                 |
+| Containerization    | Docker                |
+| Configuration       | python-dotenv         |
 
 ---
 
@@ -659,361 +611,309 @@ The dashboard serves as the user's **AI-powered work command center**.
 WorkPilot-AI/
 │
 ├── agents/
-│   ├── planner.py
-│   ├── executor.py
-│   ├── rag_agent.py
-│   └── email_agent.py
+│   └── daily_planner.py
 │
-├── graph.py
-├── state.py
-├── supervisor.py
+├── rag/
+│   ├── ingest.py
+│   └── retrieve.py
+│
+├── _pages/
+│   ├── _api.py
+│   ├── activity_page.py
+│   └── dashboard.py
+│
+├── auth.py
 ├── config.py
+├── manager_panel.py
+├── streamlit_app.py
+├── work_manager.py
 │
-├── memory/
-│   └── ...
+├── assets/
+│   ├── welcome.png
+│   ├── manager_panel.png
+│   ├── plan_day.png
+│   ├── Rag.png
+│   ├── Event_Approval.png
+│   ├── event_creation.png
+│   ├── Tasks.png
+│   └── Notes.png
 │
-├── workflows/
-│   └── ...
-│
-├── frontend/
-│   └── ...
-│
-├── backend/
-│   └── ...
-│
-├── chroma_db/
-│
-├── .env
-├── .gitignore
 ├── requirements.txt
+├── .gitignore
 └── README.md
 ```
 
 ---
 
-# 🛠️ Technology Stack
+# 🚀 Run Locally
 
-| Category            | Technology            |
-| ------------------- | --------------------- |
-| Language            | Python                |
-| Agent Framework     | LangGraph             |
-| LLM Framework       | LangChain             |
-| LLM                 | Groq / Mistral        |
-| Embeddings          | Sentence Transformers |
-| Vector Database     | ChromaDB              |
-| Database            | PostgreSQL            |
-| Automation          | n8n                   |
-| Backend             | FastAPI               |
-| Frontend            | Streamlit             |
-| Containerization    | Docker                |
-| Document Processing | PyPDF                 |
-| Environment         | python-dotenv         |
-
----
-
-# 🚀 Getting Started
-
-## 1. Clone the Repository
+## 1. Clone the repository
 
 ```bash
-git clone <your-repository-url>
-cd WorkPilot-AI
+git clone <YOUR_REPOSITORY_URL>
+
+cd WorkPilot-AI-Deployment
 ```
 
-## 2. Create a Virtual Environment
+## 2. Create a virtual environment
 
 ```bash
 python -m venv fastenv
 ```
 
-Activate it on Windows:
+### Windows
 
 ```bash
 fastenv\Scripts\activate
 ```
 
-## 3. Install Dependencies
+## 3. Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## 4. Configure Environment Variables
+## 4. Configure environment variables
 
-Create a `.env` file containing the required credentials and service configuration.
+Create a `.env` file if required by the selected configuration.
 
-The project requires configuration for:
+Example:
 
-* Groq API
-* Mistral API
-* PostgreSQL
-* n8n
+```env
+DEMO_MODE=true
+```
 
-> **Do not commit API keys, passwords, or `.env` files to GitHub.**
+Additional API configuration may be required when running the full backend-enabled architecture.
 
-## 5. Start the Backend
+> **Never commit API keys, passwords, database credentials, or `.env` files to GitHub.**
+
+## 5. Start Streamlit
 
 ```bash
-uvicorn main:app --host 127.0.0.1 --port 8000
+streamlit run streamlit_app.py
 ```
 
-FastAPI:
+The application will normally be available at:
 
 ```text
-http://127.0.0.1:8000
-```
-
-API documentation:
-
-```text
-http://127.0.0.1:8000/docs
-```
-
-## 6. Start the Frontend
-
-```bash
-streamlit run app.py
-```
-
-Make sure PostgreSQL and the required n8n workflows are running before using integrations.
-
----
-
-# 💻 Example Use Cases
-
-### 1. Daily Planning
-
-```text
-User:
-"Plan my workday."
-
-WorkPilot:
-→ Loads work context
-→ Reviews tasks and calendar
-→ Prioritizes work
-→ Generates a daily plan
-```
-
-### 2. Enterprise Knowledge
-
-```text
-User:
-"What is the company's leave policy?"
-
-WorkPilot:
-→ Searches company documents
-→ Retrieves relevant information
-→ Generates grounded answer
-```
-
-### 3. Email Automation
-
-```text
-User:
-"Send an update to the team."
-
-WorkPilot:
-→ Understands request
-→ Drafts message
-→ Requests approval
-→ Sends email
-→ Verifies execution
-```
-
-### 4. Calendar Automation
-
-```text
-User:
-"Schedule a meeting tomorrow at 3 PM."
-
-WorkPilot:
-→ Prepares calendar event
-→ Requests approval
-→ Creates event
-→ Confirms result
-```
-
-### 5. Workplace Complaint
-
-```text
-Complaint Email
-      ↓
-AI Analysis
-      ↓
-Prepare Response
-      ↓
-Slack Notification
-      ↓
-Follow-up Action
-      ↓
-Human Approval
-      ↓
-Execute
-      ↓
-Verify
+http://localhost:8501
 ```
 
 ---
 
-# 🔐 Security & Design Principles
+# ☁️ Streamlit Deployment
 
-WorkPilot follows several principles for safer enterprise AI:
+The demo is designed for deployment using **Streamlit Community Cloud**.
+
+Typical deployment flow:
+
+```text
+GitHub Repository
+       ↓
+Select Branch
+       ↓
+Select streamlit_app.py
+       ↓
+Configure Secrets
+       ↓
+Deploy
+       ↓
+Public WorkPilot Demo
+```
+
+For the demo configuration, set the required environment variables/secrets through the Streamlit deployment settings rather than committing them to the repository.
+
+---
+
+# 🔐 Security Considerations
+
+WorkPilot follows several design principles for safer AI workflows:
 
 ### Human Approval
 
-Consequential external actions can require explicit user approval.
+Consequential actions can require explicit human approval.
 
 ### Controlled Tool Access
 
-AI agents interact with external services through defined workflows.
+External services can be accessed through defined workflows rather than unrestricted agent access.
 
-### Read/Write Separation
+### Read / Write Separation
 
-Read-only operations are handled differently from actions that modify external systems.
+Read-only information retrieval is treated differently from operations that modify external systems.
 
 ### No Hardcoded Secrets
 
-Credentials are stored through environment variables.
+Credentials should be supplied through environment variables or deployment secrets.
 
 ### Execution Verification
 
-The system records whether an action succeeded or failed.
+External action results can be checked before reporting completion.
 
-### Persistent State
+### Role-Aware Retrieval
 
-Important workflow information can be stored for future interactions.
-
-### Role-Aware Knowledge
-
-Enterprise information can be restricted according to user permissions.
+Enterprise documents can be filtered according to user permissions.
 
 ---
 
-# 🌟 What Makes the Project Innovative?
+# 🖼️ Screenshots
 
-WorkPilot brings multiple AI capabilities together into a single agentic workflow:
+## Dashboard
 
-```text
-              ┌────────────────────┐
-              │   Enterprise RAG   │
-              └─────────┬──────────┘
-                        │
-┌──────────────┐        ▼        ┌───────────────┐
-│ Work Context │ ──► AI Planner ◄──│  AI Memory   │
-└──────────────┘        │        └───────────────┘
-                        │
-                        ▼
-                Specialist Agents
-                        │
-                        ▼
-                 Human Approval
-                        │
-                        ▼
-                Workplace Tools
-                        │
-                        ▼
-                Result Verification
-```
+![WorkPilot Dashboard](assets/welcome.png)
 
-The key innovation is not simply using an LLM.
+## Manager Panel
 
-It is combining:
+![Manager Panel](assets/manager_panel.png)
 
-**Context + Reasoning + Planning + Memory + Tools + Safety + Verification**
+## Daily Planning
 
-into one workflow.
+![Daily Planning](assets/plan_day.png)
 
----
+## RAG / Document Q&A
 
-# 🎯 Project Goals
+![RAG](assets/Rag.png)
 
-WorkPilot AI was built to demonstrate how modern Agentic AI can move beyond simple question-answering toward **context-aware workplace automation**.
+## Human Approval
 
-The project demonstrates practical implementation of:
+![Event Approval](assets/Event_Approval.png)
 
-* Large Language Models
-* Retrieval-Augmented Generation
-* Multi-Agent Systems
-* LangGraph orchestration
-* Tool calling
-* Workflow automation
-* Persistent memory
-* Human-in-the-loop systems
-* Enterprise knowledge retrieval
-* API-based architecture
-* External workplace integrations
+## Calendar Automation
 
-The core idea is:
+![Calendar Creation](assets/event_creation.png)
 
-> **Understand work → Plan work → Execute work → Verify work → Remember work**
+## Task Management
 
----
+![Tasks](assets/Tasks.png)
 
-# 🔮 Future Improvements
+## Notes
 
-Planned enhancements include:
-
-* More workplace integrations
-* Advanced autonomous task planning
-* Improved long-term memory
-* Calendar optimization
-* Intelligent email prioritization
-* AI-generated daily briefings
-* Advanced work analytics
-* More granular RBAC
-* Improved tool-failure recovery
-* Agent evaluation and observability
-* Automated workflow testing
-* Production-grade authentication
-* Enterprise SSO
-* Scalable cloud deployment
+![Notes](assets/Notes.png)
 
 ---
 
 # 🎥 Demo
 
-👉 [**Watch WorkPilot AI Demo**](https://drive.google.com/file/d/1t4UnU3jqGWjHcP4VX6cAhy4iIjFtZq7c/view?usp=sharing)
+The demo demonstrates the WorkPilot experience, including:
 
-# 🖼️ Screenshots
+* AI work assistance
+* Dashboard
+* Task management
+* Notes
+* Daily planning
+* RAG-based document Q&A
+* Human approval workflows
+* Work context
 
+👉 **[Watch the full demo video](https://drive.google.com/file/d/1t4UnU3jqGWjHcP4VX6cAhy4iIjFtZq7c/view?usp=sharing)**
 
+---
 
-1. WorkPilot Dashboard
-![Approval](assets/welcome.png)
-![Approval](assets/manager_panel.png) 
-2. Daily Planning
-![Approval](assets/plan_day.png)
-3. RAG / Document Q&A
-![Approval](assets/Rag.png) 
-4. Human Approval Interface
-![Approval](assets/Event_Approval.png) 
-5. Calendar Automation
-![Approval](assets/event_creation.png)
-6. Task Management
-![Approval](assets/Tasks.png) 
-7. Notes Management
-![Approval](assets/Notes.png) 
+# 🎯 Project Goals
 
+WorkPilot AI demonstrates practical applications of modern Agentic AI:
+
+* Large Language Models
+* Multi-agent systems
+* LangGraph orchestration
+* Retrieval-Augmented Generation
+* Semantic search
+* Work-context awareness
+* Task management
+* Persistent state
+* Human-in-the-loop workflows
+* Tool integration
+* Workflow automation
+* Execution verification
+
+The central idea is:
+
+```text
+Understand Work
+      ↓
+Plan Work
+      ↓
+Assist With Work
+      ↓
+Execute Safely
+      ↓
+Verify Results
+      ↓
+Remember Context
+```
+
+---
+
+# 🔮 Future Improvements
+
+Potential future enhancements include:
+
+* More workplace integrations
+* Advanced long-term memory
+* Intelligent email prioritization
+* Calendar optimization
+* AI-generated daily briefings
+* Advanced work analytics
+* More granular RBAC
+* Improved tool-failure recovery
+* Agent evaluation
+* Observability and tracing
+* Automated workflow testing
+* Production-grade authentication
+* Enterprise SSO
+* Scalable cloud infrastructure
 
 ---
 
 # 📌 Project Status
 
-**WorkPilot AI is a hackathon-ready prototype demonstrating an autonomous, context-aware AI work-management system.**
+**WorkPilot AI is a functional Agentic AI prototype with a deployable Streamlit demo.**
 
-The project focuses on combining **Agentic AI, RAG, persistent memory, workplace automation, and human oversight** into a practical AI employee experience.
-
----
-
-# 🧠 Built With
-
-**Python · LangGraph · LangChain · Groq · Mistral · ChromaDB · Sentence Transformers · PostgreSQL · n8n · FastAPI · Streamlit · Docker**
+The public demo focuses on the core WorkPilot experience while the broader architecture demonstrates how the system can be extended with FastAPI, PostgreSQL, ChromaDB, n8n, and workplace integrations.
 
 ---
 
-## 👩‍💻 Hackathon Vision
+# 🧠 Core Concept
 
-> **WorkPilot isn't just an AI that answers your questions.
-> It's an AI that understands your work, plans what needs to happen, and helps you get it done — safely.**
+WorkPilot AI combines:
 
+```text
+Context
+   +
+Reasoning
+   +
+Planning
+   +
+Memory
+   +
+RAG
+   +
+Tools
+   +
+Human Oversight
+   +
+Verification
+```
 
+into a single AI-powered work-management experience.
+
+---
+
+# 👩‍💻 Built With
+
+**Python · Streamlit · LangGraph · LangChain · Groq · Mistral · ChromaDB · Sentence Transformers · PostgreSQL · FastAPI · n8n · Docker**
+
+---
+
+## 👩‍💻 Author
+
+**Rabia Haq**
+
+AI Developer focused on:
+
+**Generative AI · Agentic AI · RAG · Multi-Agent Systems · AI Automation**
+
+---
+
+> **WorkPilot AI is built around a simple idea:**
+>
+> **AI should understand your work, help you plan it, and assist you in getting it done — with humans remaining in control of consequential actions.**

@@ -20,6 +20,7 @@ from langchain_core.messages import HumanMessage, SystemMessage
 
 import work_manager
 from tools.n8n_client import get_calendar_events, get_recent_emails
+from config import DEMO_MODE
 
 
 # ==========================================================
@@ -75,27 +76,39 @@ def plan_my_day(user: str) -> dict:
     tasks        = work_manager.get_tasks(user)
     notes        = work_manager.get_notes(user)
 
-    # ── 2. Try to fetch calendar events ─────────────────────
+    # ── 2. Calendar context ─────────────────────────────────
     calendar_context = ""
     has_calendar = False
-    try:
-        cal_result = get_calendar_events("today and tomorrow")
-        if cal_result and cal_result.get("message"):
-            calendar_context = cal_result["message"]
-            has_calendar = True
-    except Exception as e:
-        print(f"[DailyPlanner] Calendar fetch failed: {e}")
 
-    # ── 3. Try to fetch recent emails ───────────────────────
+    if DEMO_MODE:
+        # Demo deployment does not require n8n/calendar.
+        calendar_context = ""
+        has_calendar = False
+    else:
+        try:
+            cal_result = get_calendar_events("today and tomorrow")
+            if cal_result and cal_result.get("message"):
+                calendar_context = cal_result["message"]
+                has_calendar = True
+        except Exception as e:
+            print(f"[DailyPlanner] Calendar fetch failed: {e}")
+
+    # ── 3. Email context ────────────────────────────────────
     email_context = ""
     has_emails = False
-    try:
-        email_result = get_recent_emails("unread emails from today")
-        if email_result and email_result.get("message"):
-            email_context = email_result["message"]
-            has_emails = True
-    except Exception as e:
-        print(f"[DailyPlanner] Email fetch failed: {e}")
+
+    if DEMO_MODE:
+        # Demo deployment does not require n8n/email.
+        email_context = ""
+        has_emails = False
+    else:
+        try:
+            email_result = get_recent_emails("unread emails from today")
+            if email_result and email_result.get("message"):
+                email_context = email_result["message"]
+                has_emails = True
+        except Exception as e:
+            print(f"[DailyPlanner] Email fetch failed: {e}")
 
     # ── 4. Build the prompt ─────────────────────────────────
     now = datetime.now()

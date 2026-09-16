@@ -9,7 +9,7 @@ import requests
 import streamlit as st
 from datetime import datetime
 
-from config import FASTAPI_BASE
+from config import FASTAPI_BASE, DEMO_MODE
 
 
 def _get(user: str, path: str):
@@ -78,19 +78,86 @@ def render(user: dict):
         unsafe_allow_html=True,
     )
 
-    # -- Fetch all data --
-    data = _get(username, f"/dashboard/{username}")
+  
 
-    if data is None:
-        st.warning("Cannot connect to the backend API. Start the FastAPI server for full functionality.")
-        stats = {"total": 0, "completed": 0, "pending": 0}
-        priority_counts = {"High": 0, "Medium": 0, "Low": 0}
-    elif data.get("status") == "success":
-        stats = data.get("task_stats", {})
-        priority_counts = data.get("priority_counts", {"High": 0, "Medium": 0, "Low": 0})
+    # -- Fetch all data --
+    if DEMO_MODE:
+        # Demo deployment uses Task data stored in Streamlit session state.
+        # No FastAPI or PostgreSQL connection is required.
+        demo_tasks = st.session_state.get("demo_tasks", [])
+
+        total_tasks = len(demo_tasks)
+        completed_tasks_count = sum(
+            1 for task in demo_tasks if task.get("completed")
+        )
+        pending_tasks_count = total_tasks - completed_tasks_count
+
+        priority_counts = {
+            "High": sum(
+                1 for task in demo_tasks
+                if task.get("priority") == "High"
+            ),
+            "Medium": sum(
+                1 for task in demo_tasks
+                if task.get("priority") == "Medium"
+            ),
+            "Low": sum(
+                1 for task in demo_tasks
+                if task.get("priority") == "Low"
+            ),
+        }
+
+        stats = {
+            "total": total_tasks,
+            "completed": completed_tasks_count,
+            "pending": pending_tasks_count,
+        }
+
+        data = {
+            "status": "success",
+            "task_stats": stats,
+            "priority_counts": priority_counts,
+            "recent_tasks": demo_tasks,
+        }
+
     else:
-        stats = {"total": 0, "completed": 0, "pending": 0}
-        priority_counts = {"High": 0, "Medium": 0, "Low": 0}
+        # Original production behavior — use FastAPI.
+        data = _get(username, f"/dashboard/{username}")
+
+        if data is None:
+            st.warning(
+                "Cannot connect to the backend API. "
+                "Start the FastAPI server for full functionality."
+            )
+            stats = {
+                "total": 0,
+                "completed": 0,
+                "pending": 0,
+            }
+            priority_counts = {
+                "High": 0,
+                "Medium": 0,
+                "Low": 0,
+            }
+
+        elif data.get("status") == "success":
+            stats = data.get("task_stats", {})
+            priority_counts = data.get(
+                "priority_counts",
+                {"High": 0, "Medium": 0, "Low": 0},
+            )
+
+        else:
+            stats = {
+                "total": 0,
+                "completed": 0,
+                "pending": 0,
+            }
+            priority_counts = {
+                "High": 0,
+                "Medium": 0,
+                "Low": 0,
+            }
 
     projects = []
 

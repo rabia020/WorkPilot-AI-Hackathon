@@ -11,6 +11,11 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
+# ==========================================================
+# DEPLOYMENT MODE
+# ==========================================================
+
+DEMO_MODE = os.getenv("DEMO_MODE", "false").lower() == "true"
 
 
 # ==========================================================
